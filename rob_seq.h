@@ -36,12 +36,11 @@ namespace rob_seq_ns
 	{	
 		private:
 			vector<rob_step> route;
-			int route_length;
 			map_maker_ns::map_maker map;
 		public:
 			seq_route(char* filename);
 			int trans_model();
-			int obs_model();
+			char obs_model();
 			void add_step();
 			void read_route();
 			void write_route(); 
