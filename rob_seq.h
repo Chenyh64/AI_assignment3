@@ -23,8 +23,6 @@ namespace rob_seq_ns
 	const int DELTA_COL[MAX_DIR] = {-1,  0,  1,  0} ;
 	const int DELTA_ROW[MAX_DIR] = { 0, -1,  0,  1};
 
-
-
 	struct rob_step
 	{
 		int loc_x;
@@ -36,18 +34,17 @@ namespace rob_seq_ns
 	class seq_route
 	{
 		private:
-            std::vector<rob_step> route;
+			std::vector<rob_step> route;
 			map_maker_ns::map_maker map;
 		public:
 			seq_route(char* filename);
-            ~seq_route();
+			~seq_route();
 			int trans_model();
 			char obs_model(int pos_x, int pos_y);
 			void add_step();
 			void read_route();
 			void write_route(char* filename);
 	};
-
 
 }
 
