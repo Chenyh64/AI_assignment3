@@ -61,12 +61,12 @@ namespace map_maker_ns
 			int get_col_size() const;
 			int get_row_size() const;
 			char read_bit(int position_col, int position_row) const; // return the cell in column position_col and row position_row
-			void set_bit(int position_col, int position_row, char bit_input); // set the cell in column position_col and row position_row as bit_input 
+			void set_bit(int position_col, int position_row, char bit_input); // set the cell in column position_col and row position_row as bit_input
 			bool check_available(int position_col, int position_row) const;  // check if the postion(position_col, position_row) is available (legal and not blocked)
 			int get_col_start() const; // get the position of start cell
 			int get_row_start() const;
 			int get_col_goal() const; // get the positiion of goal cell
-			int get_row_goal() const; 
+			int get_row_goal() const;
 			void set_start_cell(int position_col, int position_row); // set the position of start cell
 			void set_goal_cell(int position_col, int position_row); // set the position of goal cell
 			int get_col_hardTraverse(int index) const; // get the position of the index-th hardTraverse cell

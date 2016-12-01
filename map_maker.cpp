@@ -105,7 +105,7 @@ namespace map_maker_ns
 	{
 		return start_cell[1];
 	}
-	
+
 	// get the col positiion of goal cell
 	int grid_map::get_col_goal() const
 	{
@@ -184,7 +184,7 @@ namespace map_maker_ns
 	grid_map::~grid_map(){}
 
 	// a map built by this map maker
-	void map_maker::map_build() 
+	void map_maker::map_build()
 	{
 		int i, j, k;
 		// std::list<int> col_rand_highway[4], row_rand_highway[4]; // storing the cells of 4 different highways
@@ -200,7 +200,7 @@ namespace map_maker_ns
 				map_output.set_bit(i, j, UNBLOCKED);
 
 		// Then decide the placement of harder to traverse cells
-		for (i = 0; i < 8; ++i) 
+		for (i = 0; i < 8; ++i)
 		{
 			map_output.set_hardTraverse_cell(15 + rand() % (map_output.get_col_size() - 30), 15 + rand() % (map_output.get_row_size() - 30), i);
 
@@ -239,7 +239,7 @@ namespace map_maker_ns
 			else if (map_output.read_bit(map_output.col_rand_highway[i].back(), map_output.row_rand_highway[i].back()) == HARD_TRAVERSE)
 				map_output.set_bit(map_output.col_rand_highway[i].back(), map_output.row_rand_highway[i].back(), HARD_HIGHWAY);
 			else
-			{				
+			{
 				map_output.col_rand_highway[i].clear();
 				map_output.row_rand_highway[i].clear();
 				i -= 1;
@@ -249,7 +249,7 @@ namespace map_maker_ns
 			// break until the highway hit the edge or errors
 			while (1)
 			{
-				
+
 				for (j = 0; j < 20; ++j)
 				{
 					// continue and push the next cell into highway
@@ -288,7 +288,7 @@ namespace map_maker_ns
 
 				// if highway_valid is false we need to delete all the current cells in highway
 				// if highway_valid is true and highway_finished is false we need to take turns
-				// if highway_valid is true and highway_finished is true we need to set the highway to the map							
+				// if highway_valid is true and highway_finished is true we need to set the highway to the map
 				if (highway_valid == false)
 				{
 					while (map_output.col_rand_highway[i].size() != 0)
@@ -306,7 +306,7 @@ namespace map_maker_ns
 					map_output.row_rand_highway[i].clear();
 					i -= 1;
 					break;
-				} 
+				}
 				else
 				{
 					if (highway_finished == false)
@@ -317,7 +317,7 @@ namespace map_maker_ns
 								if (col_dir == DELTA_COL[j] && row_dir == DELTA_ROW[j])
 									break;
 							if (rand() / double(RAND_MAX)<= 0.5) // turn left
-							{								
+							{
 								if (j == 7)
 									j = -1;
 								col_dir = DELTA_COL[j + 2];
@@ -338,14 +338,14 @@ namespace map_maker_ns
 					}
 				}
 			}
-			
+
 			highway_valid = true;
 			highway_finished = false;
 		}
-		
+
 		// select the blocked cells (20%)
 		for (i = 0; i < map_output.get_col_size()*map_output.get_row_size()*0.2; ++i)
-		{	
+		{
 			col_rand_blocked = rand() % map_output.get_col_size();
 			row_rand_blocked = rand() % map_output.get_row_size();
 			if ((map_output.read_bit(col_rand_blocked, row_rand_blocked) != HARD_HIGHWAY) && \
@@ -400,7 +400,7 @@ namespace map_maker_ns
 				highway_map[i][j] = 'n';
 
 		std::list<int> highway[2];
-		
+
 		for (i = 0; i < 4; ++i) {
 			highway[0].clear();
 			highway[1].clear();
@@ -424,7 +424,7 @@ namespace map_maker_ns
 				else
 					fout << map_output.read_bit(j, i) << highway_map[j][i] << ",";
 			}
-				
+
 			if (highway_map[j][i] == 'n')
 				fout << map_output.read_bit(j, i) << "\n";
 			else
@@ -438,8 +438,8 @@ namespace map_maker_ns
 	cv::Mat map_maker::show_result(const grid_map &map_input, const result_path &result)
 	{
 		cv::Mat result_map;
-		result_map = show_map_img(map_input);		
-		
+		result_map = show_map_img(map_input);
+
 		if (result.list_col.size() == 0)
 		{
 			printf("NOT FOUND!");
@@ -549,7 +549,7 @@ namespace map_maker_ns
 				map_image.at<cv::Vec3b>((map_input.get_row_size() - 1 - map_input.get_row_goal()) * amplify_num + k, map_input.get_col_goal() * amplify_num + h)[2] = COLOR_GOAL[0];
 			}
 		}
-		
+
 
 		return map_image;
 	}
@@ -645,7 +645,7 @@ namespace map_maker_ns
 					}
 
 				}
-				
+
 			}
 		}
 	}
@@ -671,7 +671,7 @@ namespace map_maker_ns
 				double f_data[160][120];
 				double g_data[160][120];
 				double h_data[160][120];
-				
+
 				int i, j;
 				int h_name;
 
@@ -711,7 +711,7 @@ namespace map_maker_ns
 				cv::line(map_image, line_left_org, line_right_org, cv::Scalar::all(0), 2);
 			}
 
-			
+
 			cv::imshow("cell_information", map_image);
 			fin.close();
 		}

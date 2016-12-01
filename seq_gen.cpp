@@ -1,29 +1,19 @@
-#include "map_maker.h"
-
+#include "rob_seq.h"
 
 int main(int argc, char* argv[])
 {
 	if (argc < 2)
 	{
-		printf("usage: seq_gen read_text_stored_path \n");
+		printf("usage: seq_gen map_path text_stored_path \n");
 		return 0;
 	}
-/*
-	map_maker_ns::map_maker new_map;
-	new_map.read_text(argv[1]);
-	new_map.write_text_to_disk((char*)(argv[1]));
 
-	if (argc > 2 && strcmp((char*)(argv[2]), "y") == 0)
-	{
-		cv::Mat new_map_img = new_map.show_map_img();
-		cv::namedWindow("map");
-		cv::imshow("map", new_map_img);
-		cv::waitKey();
-	}
+    rob_seq_ns::seq_route newSeq(argv[1]);
+    for (int i = 0; i < 10; ++i)
+        newSeq.add_step();
 
-	if (argc > 3)
-		new_map.write_img_to_disk((char*)(argv[3]));
-*/
+    newSeq.write_route(argv[2]);
+
 	return 0;
 }
 
