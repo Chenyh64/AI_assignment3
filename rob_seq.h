@@ -23,7 +23,7 @@ namespace rob_seq_ns
 	const int DELTA_COL[MAX_DIR] = {-1,  0,  1,  0} ;
 	const int DELTA_ROW[MAX_DIR] = { 0, -1,  0,  1};
 
-	struct rob_step
+	struct Rob_step
 	{
 		int loc_x;
 		int loc_y;
@@ -31,19 +31,22 @@ namespace rob_seq_ns
 		char action;
 	};
 
-	class seq_route
+	class Seq_route
 	{
 		private:
 			std::vector<rob_step> route;
-			map_maker_ns::map_maker map;
 		public:
-			seq_route(char* filename);
-			~seq_route();
-			int trans_model();
-			char obs_model(int pos_x, int pos_y);
-			void add_step();
-			void read_route();
-			void write_route(char* filename);
+			Seq_route(char* filename);
+			~Seq_route();
+			int trans_model(map_maker_ns::map_maker &map);
+			char obs_model(int pos_x, int pos_y, map_maker_ns::map_maker &map);
+			void add_step(map_maker_ns::map_maker &map);
+			void read_route(map_maker_ns::map_maker &map);
+			void write_route(char* filename, map_maker_ns::map_maker &map);
+			int get_size(); // return the size of route
+			char get_terrain(int step); // step start from 0
+			char get_action(int step); // step start from 0
+			void get_location(int &column, int &row); // TODO: decide the range of index
 	};
 
 }

@@ -72,6 +72,7 @@ namespace map_maker_ns
 			int get_col_hardTraverse(int index) const; // get the position of the index-th hardTraverse cell
 			int get_row_hardTraverse(int index) const;
 			void set_hardTraverse_cell(int position_col, int position_row, int index); // set all hardTraverse cells
+			int get_available_cell_num(); // TODO: count number of non-blocked cells somewhere, store it, and return it here
 	};
 
 	// data structure for the result path
