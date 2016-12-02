@@ -2,6 +2,7 @@
 #define TRANSITION_MODEL_H
 
 #include "map_maker.cpp"
+#include "rob_seq.h"
 
 namespace tranisition_model_ns
 {
