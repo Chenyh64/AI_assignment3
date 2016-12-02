@@ -14,6 +14,8 @@ namespace filtering_ns
 	{
 	public:
 		void solve(map_maker_ns::map_maker &map_input, rob_seq_ns::Seq_route &sequence_input, tranisition_model_ns::Tranisition_model &transition_model, sensor_model_ns::Sensor_model &sensor_model, probability_map_ns::Probability_map &probability_output);
+	private:
+		int state_hash(map_maker_ns::map_maker &map_input, int pos_col, int pos_row);
 	};
 
 }
