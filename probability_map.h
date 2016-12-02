@@ -18,6 +18,7 @@ namespace probability_map_ns
 		double get_bit(int pos_row, int pos_column);
 	private:
 		double **map_bit;
+		int n_row, m_column;
 	};
 
 }
