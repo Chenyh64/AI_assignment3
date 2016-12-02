@@ -54,6 +54,20 @@ namespace probability_map_ns
 		return map_bit[pos_row][pos_column];
 	}
 
+	void Probability_map::get_max(int &pos_row, int &pos_column, double &probability_output)
+	{
+		int i, j;	
+		probability_output = -1;
+		for (i = 0; i < n_row; i++)
+			for (j = 0; j < m_column; j++)
+				if (get_bit(i, j) > probability_output)
+				{
+					probability_output = get_bit(i, j);
+					pos_row = i;
+					pos_column = j;
+				}
+	}
+
 }
 
 
