@@ -12,6 +12,7 @@ namespace trajectory_set_ns
 		Trajectory_set(int capacity_input);
 		~Trajectory_set();
 		void clear();
+		void resize(int capacity_input);
 		int size_of_set(); // return number of trajectories in this set
 		void set_trajectory(int index, map_maker_ns::result_path &trajectory_input, double probability_input);
 		// get the index-th trajectory, also have the probability of this trajectory

@@ -13,15 +13,26 @@ namespace trajectory_set_ns
 
 	void Trajectory_set::clear()
 	{
-		delete[] trajectory_list;
+		if (trajectory_list != NULL)
+			delete[] trajectory_list;
 		trajectory_list = NULL;
-		delete[] probability;
+		if (probability != NULL)
+			delete[] probability;
 		probability = NULL;
 	}
 
 	Trajectory_set::~Trajectory_set()
 	{
 		clear();
+	}
+
+	void Trajectory_set::resize(int capacity_input)
+	{
+		clear();
+		capacity = capacity_input;
+		n = 0;
+		trajectory_list = new map_maker_ns::result_path[capacity];
+		probability = new double[capacity];
 	}
 
 	int Trajectory_set::size_of_set()
