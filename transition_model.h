@@ -1,7 +1,6 @@
 #ifndef TRANSITION_MODEL_H
 #define TRANSITION_MODEL_H
 
-#include "map_maker.cpp"
 #include "rob_seq.h"
 
 namespace transition_model_ns

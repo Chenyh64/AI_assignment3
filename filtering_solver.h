@@ -1,7 +1,6 @@
 #ifndef FILTERING_SOLVER_H
 #define FILTERING_SOLVER_H
 
-#include "map_maker.h"
 #include "rob_seq.h"
 #include "transition_model.h"
 #include "sensor_model.h"

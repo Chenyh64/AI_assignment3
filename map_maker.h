@@ -12,6 +12,8 @@
 #include <time.h>
 #include <fstream>
 #include <opencv/highgui.h>
+#include <opencv2/contrib/contrib.hpp>
+#include <opencv2/core/core.hpp>
 #include <algorithm>
 
 namespace map_maker_ns

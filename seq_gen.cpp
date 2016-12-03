@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
 
     seq.write_route(argv[2]);
 
-    if (argc == 3 && argv[3] == "y")
+    if (argc == 4 && strcmp(argv[3], "y")==0)
     {
      cv::Mat map_img = map.show_map_img();
 

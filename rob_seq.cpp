@@ -1,6 +1,4 @@
 #include "rob_seq.h"
-#include "map_maker.h"
-
 
 namespace rob_seq_ns
 {
@@ -164,4 +162,25 @@ namespace rob_seq_ns
                     map_img.at<cv::Vec3b>((map.map_output.get_row_size() - 1 - route[i].loc_y)*amplify_num + k, route[i].loc_x*amplify_num + h)[2] = COLOR_ROUTE[0];
                 }
     }
+
+    cv::Mat show_heatMap(probability_map_ns::Probability_map pMap)
+    {
+        int amplify_num = 5;
+		cv::Mat pMap_img(pMap.get_row_size() * amplify_num, pMap.get_col_size() * amplify_num\
+			,CV_8UC1, cv::Scalar( 0 ));
+
+
+        for (int k = 0; k < amplify_num; ++k)
+            for (int h = 0; h < amplify_num; ++h)
+                for (int i = 0; i < pMap.get_row_size(); ++i)
+                    for (int j = 0; j < pMap.get_col_size(); ++j)
+                        pMap_img.at<uchar>((pMap.get_row_size() - 1 - i)*amplify_num + k, j*amplify_num + h) = pMap.get_bit(i, j);
+
+
+        cv::Mat heatMap;
+        cv::applyColorMap(pMap_img, heatMap, 0);
+
+        return heatMap;
+    }
+
 }

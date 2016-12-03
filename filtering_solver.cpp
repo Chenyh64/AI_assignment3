@@ -15,14 +15,14 @@ namespace filtering_ns
 		probability_output.clear();
 		probability_output.resize(row_size, col_size);
 		for (int row = 0; row < row_size; row++)
-			for (int col = 0, col < col_size; col++)
+			for (int col = 0; col < col_size; col++)
 			{
 				int state = state_hash(map_input, col, row);
 				probability_output.set_bit(row, col, belief_state[state]);
 			}
 	}
 
-	void Filtering_solver::solve(map_maker_ns::map_maker &map_input, rob_seq_ns::Seq_route &sequence_input, transition_model_ns::Transition_model &transition_model, sensor_model_ns::Sensor_model &sensor_model, probability_map_ns::Probability_map &probability_output)
+	void Filtering_solver::solve(map_maker_ns::map_maker &map_input, rob_seq_ns::Seq_route &sequence_input, transition_model_ns::Transition_model &transition_model, sensor_model_ns::Sensor_model &sensor_model, probability_map_ns::Probability_map &probability_output, probability_map_ns::Probability_map &after10, probability_map_ns::Probability_map &after50)
 	{
 		int i, j, col, row, map_size = map_input.map_output.get_col_size() * map_input.map_output.get_row_size();
 		double *current_belief = new double[map_size], *previous_belief = new double[map_size];
@@ -42,8 +42,8 @@ namespace filtering_ns
 				{
 					int state = state_hash(map_input, col, row);
 					current_belief[state] = 0;
-					for (previous_col = col - 1; previous_col <= col + 1; previous_col++)
-						for (previous_row = row - 1; previous_row <= row + 1; previous_row++)
+					for (int previous_col = col - 1; previous_col <= col + 1; previous_col++)
+						for (int previous_row = row - 1; previous_row <= row + 1; previous_row++)
 							if (map_input.map_output.check_available(previous_col, previous_row))
 							{
 								int previous_state = state_hash(map_input, previous_col, previous_row);

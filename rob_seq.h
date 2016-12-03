@@ -7,7 +7,8 @@
 #include <time.h>
 #include <vector>
 #include <fstream>
-#include "map_maker.h"
+#include "probability_map.h"
+
 
 namespace rob_seq_ns
 {
@@ -20,7 +21,7 @@ namespace rob_seq_ns
 	//0   2
 	//  1
 	const int MAX_DIR = 4;
-	const int DELTA_COL[MAX_DIR] = {-1,  0,  1,  0} ;
+	const int DELTA_COL[MAX_DIR] = {-1,  0,  1,  0};
 	const int DELTA_ROW[MAX_DIR] = { 0, -1,  0,  1};
 
     const int amplify_num = 5;
@@ -52,7 +53,9 @@ namespace rob_seq_ns
 			char get_action(int step); // step start from 0
 			void get_location(int &column, int &row, int step); // decide the range of index
             void show_route(cv::Mat &map_img, map_maker_ns::map_maker &map); // show the route on the map
-	};
+    };
+
+    cv::Mat show_heatMap(probability_map_ns::Probability_map pMap);
 
 }
 

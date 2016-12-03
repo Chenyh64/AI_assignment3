@@ -28,13 +28,13 @@ namespace probability_map_ns
 		int i;
 		if (map_bit != NULL)
 		{
-			for (i = 0; i < n_row)
+			for (i = 0; i < n_row; ++i)
 				if (map_bit[i] != NULL)
 				{
 					delete[] map_bit[i];
 					map_bit[i] = NULL;
 				}
-			delte[] map_bit;
+			delete[] map_bit;
 			map_bit = NULL;
 		}
 	}
@@ -56,7 +56,7 @@ namespace probability_map_ns
 
 	void Probability_map::get_max(int &pos_row, int &pos_column, double &probability_output)
 	{
-		int i, j;	
+		int i, j;
 		probability_output = -1;
 		for (i = 0; i < n_row; i++)
 			for (j = 0; j < m_column; j++)
