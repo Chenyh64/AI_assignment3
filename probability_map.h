@@ -17,6 +17,8 @@ namespace probability_map_ns
 		void set_bit(int pos_row, int pos_column, double probability_input);
 		double get_bit(int pos_row, int pos_column);
 		void get_max(int &pos_row, int &pos_column, double &probability_output);
+		int get_col_size();
+		int get_row_size();
 	private:
 		double **map_bit;
 		int n_row, m_column;

@@ -68,6 +68,16 @@ namespace probability_map_ns
 				}
 	}
 
+	int Probability_map::get_col_size()
+	{
+		return m_column;
+	}
+
+	int Probability_map::get_row_size()
+	{
+		return n_row;
+	}
+
 }
 
 
