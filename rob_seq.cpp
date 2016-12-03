@@ -170,15 +170,23 @@ namespace rob_seq_ns
 			,CV_8UC1, cv::Scalar( 0 ));
 
 
-        for (int k = 0; k < amplify_num; ++k)
-            for (int h = 0; h < amplify_num; ++h)
-                for (int i = 0; i < pMap.get_row_size(); ++i)
-                    for (int j = 0; j < pMap.get_col_size(); ++j)
-                        pMap_img.at<uchar>((pMap.get_row_size() - 1 - i)*amplify_num + k, j*amplify_num + h) = pMap.get_bit(i, j);
+        double maxValue;
+        int locX, locY;
+        pMap.get_max(locY, locX, maxValue);
 
-
+        for (int i = 0; i < pMap.get_row_size(); ++i)
+            for (int j = 0; j < pMap.get_col_size(); ++j)
+                for (int k = 0; k < amplify_num; ++k)
+                    for (int h = 0; h < amplify_num; ++h)
+                    {
+                        pMap_img.at<uchar>((pMap.get_row_size() - 1 - i)*amplify_num + k, j*amplify_num + h) = 255 * pMap.get_bit(i, j)/maxValue;
+                        //std::cout << 255*pMap.get_bit(i, j)/maxValue << std::endl;
+                    }
+       // cv::namedWindow("xxx");
+       // cv::imshow("xxx", pMap_img);
+       // cv::waitKey();
         cv::Mat heatMap;
-        cv::applyColorMap(pMap_img, heatMap, 0);
+        cv::applyColorMap(pMap_img, heatMap, 2);
 
         return heatMap;
     }
