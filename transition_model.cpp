@@ -1,9 +1,9 @@
 #include "transition_model.h"
 
-namespace tranisition_model_ns
+namespace transition_model_ns
 {
 
-	double Tranisition_model::prior(int pos_col, int pos_row, map_maker_ns::map_maker &map_input)
+	double Transition_model::prior(int pos_col, int pos_row, map_maker_ns::map_maker &map_input)
 	{
 		int available_cells = map_input.map_output.get_available_cell_num();
 		double res = double(1) / double(available_cells);
@@ -12,7 +12,7 @@ namespace tranisition_model_ns
 		return res;
 	}
 
-	double Tranisition_model::transit_probability(int from_col, int from_row, int to_col, int to_row, char action, map_maker_ns::map_maker &map_input)
+	double Transition_model::transit_probability(int from_col, int from_row, int to_col, int to_row, char action, map_maker_ns::map_maker &map_input)
 	{
 		if (!map_input.map_output.check_available(to_col, to_row))
 			return 0;

@@ -4,10 +4,10 @@
 #include "map_maker.cpp"
 #include "rob_seq.h"
 
-namespace tranisition_model_ns
+namespace transition_model_ns
 {
 
-	class Tranisition_model
+	class Transition_model
 	{
 	public:
 		double prior(int pos_col, int pos_row, map_maker_ns::map_maker &map_input);

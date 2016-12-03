@@ -22,7 +22,7 @@ namespace filtering_ns
 			}
 	}
 
-	void Filtering_solver::solve(map_maker_ns::map_maker &map_input, rob_seq_ns::Seq_route &sequence_input, tranisition_model_ns::Tranisition_model &transition_model, sensor_model_ns::Sensor_model &sensor_model, probability_map_ns::Probability_map &probability_output)
+	void Filtering_solver::solve(map_maker_ns::map_maker &map_input, rob_seq_ns::Seq_route &sequence_input, transition_model_ns::Transition_model &transition_model, sensor_model_ns::Sensor_model &sensor_model, probability_map_ns::Probability_map &probability_output)
 	{
 		int i, j, col, row, map_size = map_input.map_output.get_col_size() * map_input.map_output.get_row_size();
 		double *current_belief = new double[map_size], *previous_belief = new double[map_size];
