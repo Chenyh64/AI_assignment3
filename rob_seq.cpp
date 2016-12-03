@@ -4,54 +4,53 @@
 
 namespace rob_seq_ns
 {
-	seq_route::seq_route(char* filename)
+	Seq_route::Seq_route()
 	{
-		map.read_text(filename);
 		srand((unsigned)time(0));
 	}
 
-	seq_route::~seq_route()
+	Seq_route::~Seq_route()
 	{
 		route.clear();
 	}
 
-	void seq_route::add_step()
+	void Seq_route::add_step(map_maker_ns::map_maker& map)
 	{
 
 		if (route.size() == 0)
 		{
-		    rob_step firstCell;
+		    Rob_step firstCell;
             do
             {
-            firstCell.loc_x = rand() % map.map_output.get_col_size();
-			firstCell.loc_y = rand() % map.map_output.get_row_size();
+                firstCell.loc_x = rand() % map.map_output.get_col_size();
+			    firstCell.loc_y = rand() % map.map_output.get_row_size();
             }while(map.map_output.check_available(firstCell.loc_x, firstCell.loc_y)==false);
             route.push_back(firstCell);
         }
 
-		rob_step newCell;
+		Rob_step newCell;
 		int dir = trans_model();
 		newCell.loc_x = route[route.size()-1].loc_x + DELTA_COL[dir];
 		newCell.loc_y = route[route.size()-1].loc_y + DELTA_ROW[dir];
-		if (map.map_output.check_available(newCell.loc_x, newCell.loc_y)==false || rand()/double(RAND_MAX) > 0.9){
+		if (map.map_output.check_available(newCell.loc_x, newCell.loc_y)==false || ((double)(rand()/(RAND_MAX)) > 0.9)){
 			newCell.loc_x = route[route.size()-1].loc_x;
 			newCell.loc_y = route[route.size()-1].loc_y;
 		}
 		newCell.action = direc[dir];
-		newCell.obs_terrian = obs_model(route[route.size()-1].loc_x, route[route.size()-1].loc_y);
+		newCell.obs_terrian = obs_model(route[route.size()-1].loc_x, route[route.size()-1].loc_y, map);
 
 		route.push_back(newCell);
-	}
+    }
 
 
-	int seq_route::trans_model()
+	int Seq_route::trans_model()
 	{
 		int dir;
 		dir = rand() % MAX_DIR;
 		return dir;
 	}
 
-	char seq_route::obs_model(int pos_x, int pos_y)
+	char Seq_route::obs_model(int pos_x, int pos_y, map_maker_ns::map_maker& map)
 	{
 		char terrian = map.map_output.read_bit(pos_x, pos_y);
 		switch(terrian)
@@ -90,7 +89,7 @@ namespace rob_seq_ns
 		}
 	}
 
-    void seq_route::write_route(char* filename)
+    void Seq_route::write_route(char* filename)
     {
         std::ofstream fout;
         fout.open(filename);
@@ -103,5 +102,66 @@ namespace rob_seq_ns
             fout << route[i].obs_terrian << std::endl;
 
         fout.close();
+    }
+
+    void Seq_route::read_route(char* filename)
+    {
+        std::ifstream fin;
+        fin.open(filename);
+        Rob_step firstCell;
+        fin >> firstCell.loc_x >> firstCell.loc_y;
+        route.push_back(firstCell);
+
+        for (int i = 1; i <= 100; ++i)
+        {
+            Rob_step newCell;
+            fin >> newCell.loc_x >> newCell.loc_y;
+            route.push_back(newCell);
+        }
+
+        for (int i = 1; i <= 100; ++i)
+        {
+            fin >> route[i].action;
+        }
+
+        for (int i = 1; i <= 100; ++i)
+        {
+            fin >> route[i].obs_terrian;
+        }
+
+        fin.close();
+    }
+
+    int Seq_route::get_size()
+    {
+        return route.size();
+    }
+
+    char Seq_route::get_terrain(int step)
+    {
+        return route[step].obs_terrian;
+    }
+
+    char Seq_route::get_action(int step)
+    {
+        return route[step].action;
+    }
+
+    void Seq_route::get_location(int& column, int &row, int step)
+    {
+        column = route[step].loc_x;
+        row = route[step].loc_y;
+    }
+
+    void Seq_route::show_route(cv::Mat& map_img, map_maker_ns::map_maker& map)
+    {
+        for (int k = 0; k < amplify_num; ++k)
+            for (int h = 0; h < amplify_num; ++h)
+                for (int i = 0; i < route.size(); ++i)
+                {
+                    map_img.at<cv::Vec3b>((map.map_output.get_row_size() - 1 - route[i].loc_y)*amplify_num + k, route[i].loc_x*amplify_num + h)[0] = COLOR_ROUTE[2];
+                    map_img.at<cv::Vec3b>((map.map_output.get_row_size() - 1 - route[i].loc_y)*amplify_num + k, route[i].loc_x*amplify_num + h)[1] = COLOR_ROUTE[1];
+                    map_img.at<cv::Vec3b>((map.map_output.get_row_size() - 1 - route[i].loc_y)*amplify_num + k, route[i].loc_x*amplify_num + h)[2] = COLOR_ROUTE[0];
+                }
     }
 }
