@@ -9,6 +9,19 @@ namespace filtering_ns
 		return res;
 	}
 
+	void Filtering_solver::gen_probability_map(double *belief_state, map_maker_ns::map_maker &map_input, probability_map_ns::Probability_map &probability_output)
+	{
+		int row_size = map_input.map_output.get_row_size(), col_size = map_input.map_output.get_col_size();
+		probability_output.clear();
+		probability_output.resize(row_size, col_size);
+		for (int row = 0; row < row_size; row++)
+			for (int col = 0, col < col_size; col++)
+			{
+				int state = state_hash(map_input, col, row);
+				probability_output.set_bit(row, col, belief_state[state]);
+			}
+	}
+
 	void Filtering_solver::solve(map_maker_ns::map_maker &map_input, rob_seq_ns::Seq_route &sequence_input, tranisition_model_ns::Tranisition_model &transition_model, sensor_model_ns::Sensor_model &sensor_model, probability_map_ns::Probability_map &probability_output)
 	{
 		int i, j, col, row, map_size = map_input.map_output.get_col_size() * map_input.map_output.get_row_size();
@@ -42,16 +55,13 @@ namespace filtering_ns
 				}
 			for (j = 0; j < map_size; j++)
 				previous_belief[j] = current_belief[j] / sum_normalize;
+			if (i == 9)
+				gen_probability_map(previous_belief, map_input, after10);
+			if (i == 49)
+				gen_probability_map(previous_belief, map_input, after50);
 		}
 
-		probability_output.clear();
-		probability_output.resize(map_input.map_output.get_row_size(), map_input.map_output.get_col_size());
-		for (row = 0; row < map_input.map_output.get_row_size(); i++)
-			for (col = 0; col < map_input.map_output.get_col_size(); j++)
-			{
-				int state = state_hash(map_input, col, row);
-				probability_output.set_bit(row, col, previous_belief[state]);
-			}
+		gen_probability_map(previous_belief, map_input, probability_output);
 
 		delete[] current_belief;
 		current_belief = NULL;
