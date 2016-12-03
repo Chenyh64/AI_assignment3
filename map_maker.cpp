@@ -170,6 +170,16 @@ namespace map_maker_ns
 		return MAX_ROW;
 	}
 
+    int grid_map::get_available_cell_num()
+    {
+        int num = 0;
+        for (int i = 0; i < MAX_COLUMN; ++i)
+            for (int j = 0; j < MAX_ROW; ++j)
+                if (read_bit(i,j) != BLOCKED)
+                    num ++;
+        return num;
+    }
+
 	grid_map::grid_map(int col, int row)
 	{
 		int i;
@@ -529,7 +539,7 @@ namespace map_maker_ns
 				}
 			}
 		}
-
+/*
 		// color the start and goal cell
 		for (k = 0; k < amplify_num; ++k)
 		{
@@ -549,7 +559,7 @@ namespace map_maker_ns
 				map_image.at<cv::Vec3b>((map_input.get_row_size() - 1 - map_input.get_row_goal()) * amplify_num + k, map_input.get_col_goal() * amplify_num + h)[2] = COLOR_GOAL[0];
 			}
 		}
-
+*/
 
 		return map_image;
 	}
