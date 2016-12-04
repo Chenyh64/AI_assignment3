@@ -12,6 +12,7 @@ namespace probability_map_ns
 		Probability_map();
 		Probability_map(int num_row, int num_column);
 		~Probability_map();
+		void allocate_space(int num_row, int num_column);
 		void clear();
 		void resize(int num_row, int num_column);
 		void set_bit(int pos_row, int pos_column, double probability_input);

@@ -8,9 +8,8 @@ namespace probability_map_ns
 		map_bit = NULL;
 	}
 
-	void Probability_map::resize(int num_row, int num_column)
+	void Probability_map::allocate_space(int num_row, int num_column)
 	{
-		clear();
 		int i;
 		map_bit = new double*[num_row];
 		for (i = 0; i < num_row; i++)
@@ -19,14 +18,15 @@ namespace probability_map_ns
 		m_column = num_column;
 	}
 
+	void Probability_map::resize(int num_row, int num_column)
+	{
+		clear();
+		allocate_space(num_row, num_column);
+	}
+
 	Probability_map::Probability_map(int num_row, int num_column)
 	{
-		int i;
-		map_bit = new double*[num_row];
-		for (i = 0; i < num_row; i++)
-			map_bit[i] = new double[num_column];
-		n_row = num_row;
-		m_column = num_column;
+		allocate_space(num_row, num_column);
 	}
 
 	void Probability_map::clear()
