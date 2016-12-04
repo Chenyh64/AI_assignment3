@@ -44,6 +44,17 @@ namespace map_maker_ns
 	const int COLOR_START[3] = { 0,255,0 }; // Green
 	const int COLOR_GOAL[3] = { 255,0,0 }; // Red
 	const int COLOR_RESULT[3] = { 255,255,0 };
+    const int COLOR[10][3] = {{ 255,0,0 },\
+                              { 0,255,0 },\
+                              { 0,0,255 },\
+                              { 255,255,0 },\
+                              { 255,0,255 },\
+                              { 0,255,255 },\
+                              { 127,0,0 },\
+                              { 0,127,0 },\
+                              { 0,0,127 },\
+                              { 127,127,127 }};
+
 
 
 	// map data, assume both columns and rows start from 0
@@ -100,7 +111,8 @@ namespace map_maker_ns
 			static cv::Mat show_map_img(const grid_map &map_input); // display and return the map_input as an image
 			cv::Mat show_map_img(); // display and return the map_input as an image
 			static cv::Mat show_result(const grid_map &map_input, const result_path &result); // optional: display the map_input and the result
-			static void read_text(char* src, grid_map &map_loaded); // read a text file in path given by src and store the map into map_loaded
+        	static void show_result(cv::Mat &result_map, const grid_map &map_input, const result_path &result, int color); // optional: display the map_input and the result
+            static void read_text(char* src, grid_map &map_loaded); // read a text file in path given by src and store the map into map_loaded
 			void read_text(char* src); // read a text file in path given
 		    void read_smallText(char* src); // read a small text file
             static void reset_map_start_goal(grid_map &map_input); // change the start and goal cell in the map

@@ -453,6 +453,35 @@ namespace map_maker_ns
 
 		fout.close();
 	}
+	// optional: display the map_input and the result
+	void map_maker::show_result(cv::Mat &result_map, const grid_map &map_input, const result_path &result, int colorNum)
+	{
+
+		if (result.list_col.size() == 0)
+		{
+			printf("NOT FOUND!");
+			return;
+		}
+
+		int i;
+		int k, h;
+		int amplify_num = 5;
+
+		for (i = 1; i < result.list_row.size()-1; ++i)
+		{
+			for (k = 1; k < amplify_num-1; ++k)
+			{
+				for (h = 1; h < amplify_num-1; ++h)
+				{
+					result_map.at<cv::Vec3b>((map_input.get_row_size() - 1 - result.list_row[i])*amplify_num + k, result.list_col[i] * amplify_num + h)[0] = COLOR[colorNum][2];
+					result_map.at<cv::Vec3b>((map_input.get_row_size() - 1 - result.list_row[i])*amplify_num + k, result.list_col[i] * amplify_num + h)[1] = COLOR[colorNum][1];
+					result_map.at<cv::Vec3b>((map_input.get_row_size() - 1 - result.list_row[i])*amplify_num + k, result.list_col[i] * amplify_num + h)[2] = COLOR[colorNum][0];
+				}
+			}
+		}
+
+	}
+
 
 	// optional: display the map_input and the result
 	cv::Mat map_maker::show_result(const grid_map &map_input, const result_path &result)
@@ -626,7 +655,7 @@ namespace map_maker_ns
             for (int j = 0; j < col; ++j)
             {
                 fin >> type;
-                map_output.set_bit(j, i, type);
+                map_output.set_bit(j, row - i, type);
             }
     }
 
