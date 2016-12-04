@@ -453,7 +453,8 @@ namespace map_maker_ns
 
 		fout.close();
 	}
-	// optional: display the map_input and the result
+/*
+    // optional: display the map_input and the result
 	void map_maker::show_result(cv::Mat &result_map, const grid_map &map_input, const result_path &result, int colorNum)
 	{
 
@@ -481,7 +482,7 @@ namespace map_maker_ns
 		}
 
 	}
-
+*/
 
 	// optional: display the map_input and the result
 	cv::Mat map_maker::show_result(const grid_map &map_input, const result_path &result)
@@ -655,7 +656,7 @@ namespace map_maker_ns
             for (int j = 0; j < col; ++j)
             {
                 fin >> type;
-                map_output.set_bit(j, row - i, type);
+                map_output.set_bit(j, row - i - 1, type);
             }
     }
 
