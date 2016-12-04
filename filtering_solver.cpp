@@ -36,20 +36,34 @@ namespace filtering_ns
 
 		for (i = 0; i < sequence_input.get_size(); i++)
 		{
-			double sum_normalize = 0;
+			double sum_normalize = 0, transition_p;
 			for (row = 0; row < map_input.map_output.get_row_size(); row++)
 				for (col = 0; col < map_input.map_output.get_col_size(); col++)
 				{
-					int state = state_hash(map_input, col, row);
-					current_belief[state] = 0;
-					for (int previous_col = col - 1; previous_col <= col + 1; previous_col++)
-						for (int previous_row = row - 1; previous_row <= row + 1; previous_row++)
-							if (map_input.map_output.check_available(previous_col, previous_row))
-							{
-								int previous_state = state_hash(map_input, previous_col, previous_row);
-								double transition_probability = transition_model.transit_probability(previous_col, previous_row, col, row, sequence_input.get_action(i), map_input);
-								current_belief[state] += transition_probability * previous_belief[previous_state];
-							}
+					char previous_action = sequence_input.get_action(i);
+					int state = state_hash(map_input, col, row), previous_state, previous_row, previous_col, previous_direct;
+					current_belief[state] = 0;	
+					// successful action, attention: hard code - direction
+					if (previous_action == 'L')
+						previous_direct = 0;
+					else if (previous_action == 'D')
+						previous_direct = 1;
+					else if (previous_action == 'R')
+						previous_direct = 2;
+					else if (previous_action == 'U')
+						previous_direct = 3;
+					previous_row = row - rob_seq_ns::DELTA_ROW[previous_direct];
+					previous_col = col - rob_seq_ns::DELTA_COL[previous_direct];
+					if (map_input.map_output.check_available(previous_col, previous_row))
+					{
+						previous_state = state_hash(map_input, previous_col, previous_row);
+						transition_p = transition_model.transit_probability(previous_col, previous_row, col, row, previous_action, map_input);
+						current_belief[state] += transition_p * previous_belief[previous_state];
+					}
+					// stay
+					transition_p = transition_model.transit_probability(col, row, col, row, previous_action, map_input);
+					current_belief[state] += transition_p * previous_belief[state];
+
 					current_belief[state] *= sensor_model.sensor_probability(col, row, sequence_input.get_terrain(i), map_input);
 					sum_normalize += current_belief[state];
 				}
