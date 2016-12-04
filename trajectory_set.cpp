@@ -3,6 +3,14 @@
 namespace trajectory_set_ns
 {
 
+	Trajectory_set::Trajectory_set()
+	{
+		capacity = 0;
+		n = 0;
+		trajectory_list = NULL;
+		probability = NULL;
+	}
+
 	Trajectory_set::Trajectory_set(int capacity_input)
 	{
 		capacity = capacity_input;

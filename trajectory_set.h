@@ -9,6 +9,7 @@ namespace trajectory_set_ns
 	class Trajectory_set
 	{
 	public:
+		Trajectory_set();
 		Trajectory_set(int capacity_input);
 		~Trajectory_set();
 		void clear();

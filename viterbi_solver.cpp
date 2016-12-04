@@ -101,21 +101,38 @@ namespace viterbi_solver_ns
 					int state = state_hash(row, col, map_input);
 					if (map_input.map_output.check_available(col, row))
 					{
-						int max_state = -1;
-						double max_p = -1, sensor_p;
-						for (int previous_row = row - 1; previous_row <= row + 1; previous_row++)
-							for (int previous_col = col - 1; previous_col <= col + 1; previous_col++)
-								if (map_input.map_output.check_available(previous_col, previous_row))
-								{
-									int previous_state = state_hash(previous_row, previous_col, map_input);
-									double p, p_transit = transition_model.transit_probability(previous_col, previous_row, col, row, sequence_input.get_action(i - 1), map_input);
-									p = p_transit * m_message[i - 1][previous_state];
-									if (p > max_p)
-									{
-										max_p = p;
-										max_state = previous_state;
-									}
-								}
+						double max_p, sensor_p, action_p = -1, stay_p;
+						int max_state;
+						char previous_action = sequence_input.get_action(i - 1);
+						// successfull action, attention - hard code direction
+						int previous_direct, previous_col, previous_row, previous_state;
+						if (previous_action == 'L')
+							previous_direct = 0;
+						else if (previous_action == 'D')
+							previous_direct = 1;
+						else if (previous_action == 'R')
+							previous_direct = 2;
+						else if (previous_action == 'U')
+							previous_direct = 3;
+						previous_row = row - rob_seq_ns::DELTA_ROW[previous_direct];
+						previous_col = col - rob_seq_ns::DELTA_COL[previous_direct];
+						if (map_input.map_output.check_available(previous_col, previous_row))
+						{
+							previous_state = state_hash(previous_row, previous_col, map_input);
+							action_p = transition_model.transit_probability(previous_col, previous_row, col, row, previous_action, map_input) * m_message[i - 1][previous_state];
+						}
+						// stay
+						stay_p = transition_model.transit_probability(col, row, col, row, previous_action, map_input) * m_message[i - 1][state];
+						if (action_p > stay_p)
+						{
+							max_p = action_p;
+							trace_state[i][state] = previous_state;
+						}
+						else
+						{
+							max_p = stay_p;
+							trace_state[i][state] = state;
+						}
 						sensor_p = sensor_model.sensor_probability(col, row, sequence_input.get_terrain(i - 1), map_input);
 						m_message[i][state] = sensor_p * max_p;
 					}
