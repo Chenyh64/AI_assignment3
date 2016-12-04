@@ -163,7 +163,7 @@ namespace rob_seq_ns
                 }
     }
 
-    cv::Mat show_heatMap(probability_map_ns::Probability_map pMap)
+    cv::Mat show_heatMap(probability_map_ns::Probability_map &pMap)
     {
         int amplify_num = 5;
 		cv::Mat pMap_img(pMap.get_row_size() * amplify_num, pMap.get_col_size() * amplify_num\
@@ -171,7 +171,7 @@ namespace rob_seq_ns
 
 
         double maxValue;
-        int locX, locY;
+        int locX=0, locY=0;
         pMap.get_max(locY, locX, maxValue);
 
         for (int i = 0; i < pMap.get_row_size(); ++i)
@@ -181,6 +181,7 @@ namespace rob_seq_ns
                     {
                         pMap_img.at<uchar>((pMap.get_row_size() - 1 - i)*amplify_num + k, j*amplify_num + h) = 255 * pMap.get_bit(i, j)/maxValue;
                         //std::cout << 255*pMap.get_bit(i, j)/maxValue << std::endl;
+                        //std::cout << i << " " << j << " " << k << " " << h << std::endl;
                     }
        // cv::namedWindow("xxx");
        // cv::imshow("xxx", pMap_img);

@@ -14,7 +14,7 @@ namespace rob_seq_ns
 {
 
 	const char BLOCKED = 'B', UNBLOCKED = 'N', HARD_TRAVERSE = 'T', HIGHWAY = 'H';
-	const int LEFT = 0, RIGHT = 2, UP = 4, DOWN = 1;
+	const int LEFT = 0, RIGHT = 2, UP = 3, DOWN = 1;
 	const char direc[4] = {'L', 'D', 'R', 'U'};
 	// directions
 	//  3
@@ -55,7 +55,7 @@ namespace rob_seq_ns
             void show_route(cv::Mat &map_img, map_maker_ns::map_maker &map); // show the route on the map
     };
 
-    cv::Mat show_heatMap(probability_map_ns::Probability_map pMap);
+    cv::Mat show_heatMap(probability_map_ns::Probability_map& pMap);
 
 }
 
