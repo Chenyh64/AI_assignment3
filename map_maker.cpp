@@ -154,9 +154,19 @@ namespace map_maker_ns
 	// set the size of the map
 	void grid_map::set_size(int col_size, int row_size)
 	{
-		MAX_COLUMN = col_size;
+
+        for (int i = 0; i < MAX_COLUMN; ++i)
+            delete []map_bit[i];
+        delete []map_bit;
+
+        MAX_COLUMN = col_size;
 		MAX_ROW = row_size;
-	}
+
+        map_bit = new char*[MAX_COLUMN];
+        for (int i = 0; i < MAX_COLUMN; ++i)
+            map_bit[i] = new char[MAX_ROW];
+
+    }
 
 	// get the Max col of the map
 	int grid_map::get_col_size() const
@@ -601,6 +611,24 @@ namespace map_maker_ns
 		mapinput.set_goal_cell(goal_col, goal_row);
 
 	}
+
+    void map_maker::read_smallText(char* src)
+    {
+        std::ifstream fin;
+        fin.open(src);
+
+        int col, row;
+        fin >> row >> col;
+        char type;
+
+        map_output.set_size(col ,row);
+        for (int i = 0; i < row; ++i)
+            for (int j = 0; j < col; ++j)
+            {
+                fin >> type;
+                map_output.set_bit(j, i, type);
+            }
+    }
 
 	// read a text file in path given by src and store the map into map_loaded
 	void map_maker::read_text(char* src, grid_map &map_loaded)
