@@ -8,7 +8,7 @@
 #include <vector>
 #include <fstream>
 #include "probability_map.h"
-#include "viterbi_set.h"
+#include "trajectory_set.h"
 
 namespace rob_seq_ns
 {
@@ -35,7 +35,7 @@ namespace rob_seq_ns
                               { 127,0,0 },\
                               { 0,127,0 },\
                               { 0,0,127 },\
-                              { 127,127,127 }}
+                              { 127,127,127 }};
 
 	struct Rob_step
 	{
