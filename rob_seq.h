@@ -8,7 +8,7 @@
 #include <vector>
 #include <fstream>
 #include "probability_map.h"
-
+#include "viterbi_set.h"
 
 namespace rob_seq_ns
 {
@@ -26,7 +26,16 @@ namespace rob_seq_ns
 
     const int amplify_num = 5;
     const int COLOR_ROUTE[3] = { 0,255,0 };
-
+    const int COLOR[10][3] = {{ 255,0,0 },\
+                              { 0,255,0 },\
+                              { 0,0,255 },\
+                              { 255,255,0 },\
+                              { 255,0,255 },\
+                              { 0,255,255 },\
+                              { 127,0,0 },\
+                              { 0,127,0 },\
+                              { 0,0,127 },\
+                              { 127,127,127 }}
 
 	struct Rob_step
 	{
@@ -47,16 +56,18 @@ namespace rob_seq_ns
 			char obs_model(int pos_x, int pos_y, map_maker_ns::map_maker &map);
 			void add_step(map_maker_ns::map_maker &map);
 			void read_route(char* filename);
-			void write_route(char* filename);
+			void read_smallRoute(char* filename);
+            void write_route(char* filename);
 			int get_size(); // return the size of route
 			char get_terrain(int step); // step start from 0
 			char get_action(int step); // step start from 0
 			void get_location(int &column, int &row, int step); // decide the range of index
             void show_route(cv::Mat &map_img, map_maker_ns::map_maker &map); // show the route on the map
+
     };
 
     cv::Mat show_heatMap(probability_map_ns::Probability_map& pMap);
-
+    cv::Mat show_viterbiMap(cv::Mat &map_img, trajectory_set_ns::Trajectory_set tMap, int color );
 }
 
 

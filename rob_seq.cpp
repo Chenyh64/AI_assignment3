@@ -163,12 +163,28 @@ namespace rob_seq_ns
                 }
     }
 
+    void Seq_route::read_smallRoute(char* filename)
+    {
+        std::fstream fin;
+        fin.open(filename);
+        int num;
+
+        route.clear();
+        fin >> num;
+        for (int i = 0; i < num; ++i)
+        {
+            Rob_step newCell;
+            fin >> newCell.action;
+            fin >> newCell.obs_terrian;
+            route.push_back(newCell);
+        }
+
+    }
+
     cv::Mat show_heatMap(probability_map_ns::Probability_map &pMap)
     {
         int amplify_num = 5;
-		cv::Mat pMap_img(pMap.get_row_size() * amplify_num, pMap.get_col_size() * amplify_num\
-			,CV_8UC1, cv::Scalar( 0 ));
-
+		cv::Mat pMap_img(pMap.get_row_size() * amplify_num, pMap.get_col_size() * amplify_num, CV_8UC1, cv::Scalar( 0 ));
 
         double maxValue;
         int locX=0, locY=0;
@@ -191,5 +207,11 @@ namespace rob_seq_ns
 
         return heatMap;
     }
+    cv::Mat show_viterbiMap(cv::Mat &map_img, trajectory_set_ns::Trajectory_set tMap, int color)
+    {
+
+
+    }
+
 
 }
