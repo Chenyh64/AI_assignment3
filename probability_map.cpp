@@ -10,6 +10,7 @@ namespace probability_map_ns
 
 	void Probability_map::resize(int num_row, int num_column)
 	{
+		clear();
 		int i;
 		map_bit = new double*[num_row];
 		for (i = 0; i < num_row; i++)
@@ -20,7 +21,12 @@ namespace probability_map_ns
 
 	Probability_map::Probability_map(int num_row, int num_column)
 	{
-		resize(num_row, num_column);
+		int i;
+		map_bit = new double*[num_row];
+		for (i = 0; i < num_row; i++)
+			map_bit[i] = new double[num_column];
+		n_row = num_row;
+		m_column = num_column;
 	}
 
 	void Probability_map::clear()
