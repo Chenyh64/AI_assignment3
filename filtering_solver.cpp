@@ -37,6 +37,8 @@ namespace filtering_ns
 		for (i = 0; i < sequence_input.get_size(); i++)
 		{
 			double sum_normalize = 0, transition_p;
+			double max_temp = -1;
+			int max_temp_col, max_temp_row;
 			for (row = 0; row < map_input.map_output.get_row_size(); row++)
 				for (col = 0; col < map_input.map_output.get_col_size(); col++)
 				{
@@ -66,7 +68,16 @@ namespace filtering_ns
 
 					current_belief[state] *= sensor_model.sensor_probability(col, row, sequence_input.get_terrain(i), map_input);
 					sum_normalize += current_belief[state];
+					if (current_belief[state] > max_temp)
+					{
+						max_temp = current_belief[state];
+						max_temp_col = col;
+						max_temp_row = row;
+					}
 				}
+			// output max in this iteration
+			printf("%d %d\n", max_temp_col, max_temp_row);
+			// output end
 			for (j = 0; j < map_size; j++)
 				previous_belief[j] = current_belief[j] / sum_normalize;
 			if (i == 9)

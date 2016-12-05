@@ -75,6 +75,8 @@ namespace filtering_approximator_ns
 				}
 			}
 
+			double max_temp = -1;
+			int max_temp_col, max_temp_row;
 			for (auto current_state : possible_current_state)
 			{
 				state_from_hash(current_state, row, col, map_input);
@@ -100,7 +102,16 @@ namespace filtering_approximator_ns
 				}
 				current_belief[state] *= sensor_model.sensor_probability(col, row, sequence_input.get_terrain(i), map_input);
 				sum_normalize += current_belief[state];
+				if (current_belief[state] > max_temp)
+				{
+					max_temp = current_belief[state];
+					max_temp_col = col;
+					max_temp_row = row;
+				}
 			}
+			// output max position for each iteration
+			printf("%d %d\n", max_temp_col, max_temp_row);
+			// output end
 
 			previous_belief.clear();
 			for (auto current_state : possible_current_state)
